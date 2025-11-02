@@ -1,4 +1,5 @@
 use crate::Logo;
+use crate::matcher::MatcherBuilder;
 use scraper::{Html, Selector};
 
 pub trait Query {
@@ -12,6 +13,28 @@ where
     fn run(&self, doc: &Html) -> Vec<Logo> {
         self(doc)
     }
+}
+
+
+pub fn img_tag(doc: &Html) -> Vec<Logo> {
+    let matcher = MatcherBuilder::new()
+        .select("img")
+        .attr("id")
+        .attr("class")
+        .attr("src")
+        .attr("alt")
+        .contains("logo")
+        .contains("brand")
+        .build();
+
+    matcher
+        .matches(&doc)
+        .filter_map(|elem| {
+            elem.value()
+                .attr("src")
+                .map(|value| Logo::new(value.to_string()))
+        })
+        .collect()
 }
 
 pub fn og_image(doc: &Html) -> Vec<Logo> {
