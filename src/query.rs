@@ -89,14 +89,14 @@ mod test {
     #[test]
     fn test_og_image() {
         let html = r#"
-<!DOCTYPE html>
-<head>
-<meta content="https://some/assets/logo.jpg" property="og:image">
-<meta content="64" property="og:image:height">
-<meta content="64" property="og:image:width">
-</head>
-<h1 class="foo">Hello, <i>world!</i></h1>
-"#;
+            <!DOCTYPE html>
+            <head>
+            <meta content="https://some/assets/logo.jpg" property="og:image">
+            <meta content="64" property="og:image:height">
+            <meta content="64" property="og:image:width">
+            </head>
+            <h1 class="foo">Hello, <i>world!</i></h1>
+        "#;
 
         let expected = vec![Logo {
             url: "https://some/assets/logo.jpg".to_string(),
@@ -115,17 +115,17 @@ mod test {
     #[test]
     fn test_og_image_with_repetition() {
         let html = r#"
-<!DOCTYPE html>
-<head>
-<meta content="https://some/assets/logo.jpg" property="og:image">
-<meta content="64" property="og:image:height">
-<meta content="64" property="og:image:width">
-<meta content="https://some/assets/logo.jpg" property="og:image">
-<meta content="https://some/assets/logo.jpg" property="og:image">
-<meta content="64" property="og:image:width">
-</head>
-<h1 class="foo">Hello, <i>world!</i></h1>
-"#;
+            <!DOCTYPE html>
+            <head>
+            <meta content="https://some/assets/logo.jpg" property="og:image">
+            <meta content="64" property="og:image:height">
+            <meta content="64" property="og:image:width">
+            <meta content="https://some/assets/logo.jpg" property="og:image">
+            <meta content="https://some/assets/logo.jpg" property="og:image">
+            <meta content="64" property="og:image:width">
+            </head>
+            <h1 class="foo">Hello, <i>world!</i></h1>
+        "#;
 
         let expected = vec![
             Logo {
