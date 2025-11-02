@@ -16,7 +16,7 @@
 //! be used to define declarative queries. Much like a SQL
 //! query builder.
 //!
-//! ```
+//! ```ignore
 //! let img = ImageSelector::new(&doc)
 //!     .with_class("logo")
 //!     .first();
@@ -27,7 +27,7 @@
 //! This goes a little out of scope, but `Matcher` implements
 //! a very inferior version of it:
 //!
-//! ```
+//! ```ignore
 //! let elems = MatcherBuilder::new()
 //!    .select("img")
 //!    .attr("class")
