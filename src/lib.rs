@@ -1,4 +1,5 @@
 pub mod query;
+pub mod matcher;
 
 #[derive(PartialEq, Debug)]
 pub struct Logo {
