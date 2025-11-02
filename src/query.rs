@@ -1,7 +1,9 @@
+//! Helper functions for querying HTML documents.
 use crate::Logo;
 use crate::matcher::MatcherBuilder;
 use scraper::{Html, Selector};
 
+/// Common trait for types that can find possible logos in an HTML document.
 pub trait Query {
     fn run(&self, doc: &Html) -> Vec<Logo>;
 }
@@ -16,6 +18,10 @@ where
 }
 
 
+/// Finds logo canditates by comparing atribbutes.
+///
+/// It looks for any <img> tag with an id/class/src/alt
+/// that contains either "logo" or "brand".
 pub fn img_tag(doc: &Html) -> Vec<Logo> {
     let matcher = MatcherBuilder::new()
         .select("img")
@@ -37,6 +43,10 @@ pub fn img_tag(doc: &Html) -> Vec<Logo> {
         .collect()
 }
 
+/// Finds logo canditates using Open Graph metadata.
+///
+/// Any extra metadata (e.g. og:image:width, og:image:height) is associated
+/// with the last seen og:image.
 pub fn og_image(doc: &Html) -> Vec<Logo> {
     let selector = Selector::parse("meta[property^='og:image']").unwrap();
     let mut logos = Vec::new();
