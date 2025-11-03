@@ -1,3 +1,5 @@
+use data_eng_interview::driver;
+
 fn main() {
-    println!("Hello, world!");
+    driver::single_thread()
 }
