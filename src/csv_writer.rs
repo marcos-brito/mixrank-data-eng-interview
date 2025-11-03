@@ -1,13 +1,13 @@
-use std::io::{self, BufWriter, Stdout, Write};
+use std::io::{self, LineWriter, Stdout, Write};
 
 pub struct CsvWriter<W: Write> {
-    buf: BufWriter<W>,
+    buf: LineWriter<W>,
 }
 
 impl<W: Write> CsvWriter<W> {
     pub fn new(writer: W) -> Self {
         Self {
-            buf: BufWriter::new(writer),
+            buf: LineWriter::new(writer),
         }
     }
 
