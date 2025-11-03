@@ -1,3 +1,15 @@
+# Nix package
+
+I made a few changes to the Nix package so it runs Rust instead:
+
+- Pin a more recent tarball
+- Update the checksum so it matches the new tarball
+- Add rustc, cargo and openssl
+- Set the path for shared libraries to fix linking error
+- Remove python deps
+
+It should run fine, but the code might take a few seconds to compile.
+
 # Objectives
 
 - Write a program that will crawl a list of website and output their logo URLs.
