@@ -43,6 +43,27 @@ pub fn img_tag(doc: &Html) -> Vec<Logo> {
         .collect()
 }
 
+/// Finds favicons using <link> tags.
+///
+/// It looks for any <link> tags with an rel
+/// that contains "icon".
+pub fn favicon(doc: &Html) -> Vec<Logo> {
+    let matcher = MatcherBuilder::new()
+        .select("link")
+        .attr("rel")
+        .contains("icon")
+        .build();
+
+    matcher
+        .matches(&doc)
+        .filter_map(|elem| {
+            elem.value()
+                .attr("href")
+                .map(|value| Logo::new(value.to_string()))
+        })
+        .collect()
+}
+
 /// Finds logo canditates using Open Graph metadata.
 ///
 /// Any extra metadata (e.g. og:image:width, og:image:height) is associated
@@ -159,6 +180,39 @@ mod test {
         ];
 
         let got = og_image(&Html::parse_document(&html));
+
+        for (l, r) in expected.iter().zip(got) {
+            assert_eq!(l, &r)
+        }
+    }
+
+    #[test]
+    fn test_favicon() {
+        let html = r#"
+            <!DOCTYPE html>
+            <head>
+            <link rel="icon" href="/favicon.svg"/>
+            <link rel="icon" href="/favicon_dark.svg"/>
+            <link rel="stylesheet" href="/main.css"/>
+            </head>
+        "#;
+
+        let expected = vec![
+            Logo {
+                url: "/favicon.svg".to_string(),
+                mime: None,
+                width: None,
+                height: None,
+            },
+            Logo {
+                url: "/favicon_dark.svg".to_string(),
+                mime: None,
+                width: None,
+                height: None,
+            },
+        ];
+
+        let got = favicon(&Html::parse_document(&html));
 
         for (l, r) in expected.iter().zip(got) {
             assert_eq!(l, &r)

@@ -43,11 +43,12 @@ impl Finder {
             Ok(body) => {
                 let html = Html::parse_document(&body);
                 let logos = query::img_tag(&html);
+                let favicons = query::favicon(&html);
 
                 Site {
                     domain: target.to_string(),
                     logo: logos.first().cloned(),
-                    favicon: None,
+                    favicon: favicons.first().cloned(),
                 }
             }
             Err(e) => {
