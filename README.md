@@ -1,3 +1,11 @@
+# Added dependencies
+
+- `reqwest`: Http clients and requests
+- `scraper`: Querying HTML documents
+- `log`: Logging API (no actual implementation)
+- `criterion`: Benchmarking. (dev only).
+- `tokio`: Async run time. (async branch only).
+
 # Nix package
 
 I made a few changes to the Nix package so it runs Rust instead:
