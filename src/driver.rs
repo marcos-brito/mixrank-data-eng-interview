@@ -4,13 +4,10 @@ use crate::{csv_writer::CsvWriter, finder::Finder};
 use std::io::{self, Read};
 
 /// Uses a single thread to read, process and write.
-pub fn single_thread() {
-    let mut buf = String::new();
+pub fn single_thread(input: String) {
     let mut csv = CsvWriter::default();
 
-    io::stdin().read_to_string(&mut buf).unwrap();
-
-    for line in buf.lines() {
+    for line in input.lines() {
         let finder = Finder::new();
         let result = finder.find(line);
 

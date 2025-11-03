@@ -3,7 +3,14 @@ name = "data-eng-interview"
 version = "0.1.0"
 edition = "2024"
 
+[[bench]]
+name = "driver"
+harness = false
+
 [dependencies]
 log = "0.4.28"
 reqwest = { version = "0.12.24", features = ["blocking"] }
 scraper = "0.24.0"
+
+[dev-dependencies]
+criterion = "0.7.0"
