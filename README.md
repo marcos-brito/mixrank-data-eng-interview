@@ -18,6 +18,24 @@ I made a few changes to the Nix package so it runs Rust instead:
 
 It should run fine, but the code might take a few seconds to compile.
 
+# Running
+
+From the project directory, you can run the program either inside
+a nix-shell or a regular shell (if the Rust toolchain is installed).
+
+To run and see the output in the terminal:
+
+```sh
+cat website.csv | cargo run --release
+```
+
+To save the output to a file:
+
+```sh
+cat website.csv | cargo run --release > out.csv
+```
+
+The results will be written to `out.csv`.
 # Objectives
 
 - Write a program that will crawl a list of website and output their logo URLs.
