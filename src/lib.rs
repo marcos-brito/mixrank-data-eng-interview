@@ -1,5 +1,6 @@
 pub mod query;
 pub mod matcher;
+pub mod csv_writer;
 
 #[derive(PartialEq, Debug)]
 pub struct Site {
