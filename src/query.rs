@@ -3,20 +3,6 @@ use crate::Logo;
 use crate::matcher::MatcherBuilder;
 use scraper::{Html, Selector};
 
-/// Common trait for types that can find possible logos in an HTML document.
-pub trait Query {
-    fn run(&self, doc: &Html) -> Vec<Logo>;
-}
-
-impl<F> Query for F
-where
-    F: Fn(&Html) -> Vec<Logo> + 'static,
-{
-    fn run(&self, doc: &Html) -> Vec<Logo> {
-        self(doc)
-    }
-}
-
 
 /// Finds logo canditates by comparing atribbutes.
 ///
