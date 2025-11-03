@@ -21,6 +21,10 @@ pub fn drivers_benchmark(c: &mut Criterion) {
         b.iter(|| driver::single_thread(INPUT.to_string()));
     });
 
+    group.bench_function("fork_join", |b| {
+        b.iter(|| driver::fork_join(INPUT.to_string()));
+    });
+
     group.finish();
 }
 
