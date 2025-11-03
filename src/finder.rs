@@ -1,10 +1,13 @@
-use std::time::Duration;
+use crate::{
+    Site,
+    query::{self},
+};
 use reqwest::{
     IntoUrl, Url,
     blocking::{Client, ClientBuilder},
 };
 use scraper::Html;
-use crate::{Site, query};
+use std::time::Duration;
 
 pub struct Finder {
     client: Client,
@@ -30,7 +33,7 @@ impl Finder {
                     domain: target.as_str().to_string(),
                     logo: None,
                     favicon: None,
-                }
+                };
             }
         };
 
@@ -42,8 +45,8 @@ impl Finder {
         {
             Ok(body) => {
                 let html = Html::parse_document(&body);
-                let logos = query::img_tag(&html);
                 let favicons = query::favicon(&html);
+                let logos = query::choice(&html, &[query::img_tag, query::og_image]);
 
                 Site {
                     domain: target.to_string(),
