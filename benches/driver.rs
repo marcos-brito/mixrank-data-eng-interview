@@ -23,6 +23,10 @@ pub fn drivers_benchmark(c: &mut Criterion) {
         b.iter(|| driver::fork_join(INPUT.as_bytes()));
     });
 
+    group.bench_function("worker_pool", |b| {
+        b.iter(|| driver::worker_pool(32, INPUT.as_bytes()));
+    });
+
     group.finish();
 }
 

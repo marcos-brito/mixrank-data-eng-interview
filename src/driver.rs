@@ -1,7 +1,7 @@
 //! Multiple implementations of driver/glue functions using different concurrency patterns
 
-use crate::{csv_writer::CsvWriter, finder::Finder};
-use std::{io::BufRead, thread};
+use crate::{csv_writer::CsvWriter, finder::Finder, worker::Pool};
+use std::{io::BufRead, sync::mpsc, thread};
 
 /// Uses a single thread to read, process and write.
 pub fn single_thread(reader: impl BufRead) {
@@ -15,6 +15,22 @@ pub fn single_thread(reader: impl BufRead) {
         }
     }
 }
+
+pub fn worker_pool(size: usize, reader: impl BufRead) {
+    let (results_tx, results_rx) = mpsc::channel();
+    let pool = Pool::new(size, results_tx);
+    let mut csv = CsvWriter::default();
+
+    for line in reader.lines() {
+        if let Ok(url) = line {
+            pool.send(url);
+        }
+    }
+
+    pool.close();
+
+    for site in results_rx {
+        csv.add_record(site.to_csv());
     }
 }
 
