@@ -1,6 +1,7 @@
 pub mod matcher;
 pub mod csv_writer;
 pub mod query;
+pub mod worker;
 pub mod finder;
 pub mod driver;
 
