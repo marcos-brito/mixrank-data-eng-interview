@@ -46,6 +46,45 @@ These are a few updates that would make the code better, but were not implemente
 - Better API for selectors
 - Look for logos in other sources. Not only HTML
 - Output SVGs. Not only URLs
+
+# Benches
+
+I wrote a few benchmarks to test different concurrency patterns. They take
+quite some time to run even with only 10 samples, so I wouldn't recommend.
+
+If you want to run them, this is how:
+
+```sh
+cargo bench
+```
+
+It should just work, but it will take some time.
+
+## Results
+
+These were the results after running it on my machine with a reduced input:
+
+```sh
+drivers/single_thread   time:   [3.3322 s 3.8067 s 4.2840 s]
+drivers/fork_join       time:   [1.1770 s 2.2269 s 3.4842 s]
+drivers/worker_pool     time:   [754.90 ms 839.49 ms 926.70 ms]
+pool_size/16 workers    time:   [962.06 ms 1.3301 s 1.7923 s]
+pool_size/32 workers    time:   [1.1214 s 1.7618 s 2.5195 s]
+pool_size/64 workers    time:   [1.0775 s 1.3365 s 1.6495 s]
+```
+
+I also ran the benches with all the lines from `websites.csv`:
+
+```sh
+drivers/worker_pool     time:   [47.239 s 48.126 s 49.208 s]
+pool_size/16 workers    time:   [88.261 s 88.916 s 89.849 s]
+pool_size/32 workers    time:   [46.502 s 47.028 s 47.550 s]
+pool_size/64 workers    time:   [31.595 s 32.490 s 33.461 s]
+```
+
+- `single_thread` takes forever
+- `fork_join` runs out of file descriptors instantly
+
 # Objectives
 
 - Write a program that will crawl a list of website and output their logo URLs.
