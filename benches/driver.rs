@@ -30,5 +30,25 @@ pub fn drivers_benchmark(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, drivers_benchmark);
+pub fn pool_size_benchmark(c: &mut Criterion) {
+    let mut group = c.benchmark_group("pool_size");
+
+    group.sample_size(10);
+
+    group.bench_function("16 workers", |b| {
+        b.iter(|| driver::worker_pool(16, INPUT.as_bytes()));
+    });
+
+    group.bench_function("32 workers", |b| {
+        b.iter(|| driver::worker_pool(32, INPUT.as_bytes()));
+    });
+
+    group.bench_function("64 workers", |b| {
+        b.iter(|| driver::worker_pool(64, INPUT.as_bytes()));
+    });
+
+    group.finish();
+}
+
+criterion_group!(benches, drivers_benchmark, pool_size_benchmark);
 criterion_main!(benches);
