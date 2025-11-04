@@ -1,5 +1,3 @@
-use std::io;
-
 use criterion::{Criterion, criterion_group, criterion_main};
 use data_eng_interview::driver;
 
@@ -18,11 +16,11 @@ pub fn drivers_benchmark(c: &mut Criterion) {
     group.sample_size(10);
 
     group.bench_function("single_thread", |b| {
-        b.iter(|| driver::single_thread(INPUT.to_string()));
+        b.iter(|| driver::single_thread(INPUT.as_bytes()));
     });
 
     group.bench_function("fork_join", |b| {
-        b.iter(|| driver::fork_join(INPUT.to_string()));
+        b.iter(|| driver::fork_join(INPUT.as_bytes()));
     });
 
     group.finish();
