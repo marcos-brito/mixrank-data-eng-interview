@@ -36,6 +36,16 @@ cat website.csv | cargo run --release > out.csv
 ```
 
 The results will be written to `out.csv`.
+
+# Code improvements
+
+These are a few updates that would make the code better, but were not implemented:
+
+- Serialization
+- Async runtime
+- Better API for selectors
+- Look for logos in other sources. Not only HTML
+- Output SVGs. Not only URLs
 # Objectives
 
 - Write a program that will crawl a list of website and output their logo URLs.
